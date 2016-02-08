@@ -1,4 +1,4 @@
-# Jogamp_IntelliJ
+# Jogamp & IntelliJ
 A base project to use jogamp with IntelliJ.
 
 # Why?
