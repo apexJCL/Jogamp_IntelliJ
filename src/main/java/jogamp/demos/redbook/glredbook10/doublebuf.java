@@ -1,12 +1,14 @@
 package jogamp.demos.redbook.glredbook10;
 
-import javax.swing.*;
-import java.awt.event.*;
-
-import com.jogamp.opengl.util.*;
-
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLJPanel;
+import com.jogamp.opengl.util.FPSAnimator;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * This is a simple double buffered program. Pressing the left mouse button
@@ -14,11 +16,10 @@ import com.jogamp.opengl.awt.GLJPanel;
  * 
  * @author Kiet Le (Java port) Ported to JOGL 2.x by Claudio Eduardo Goes
  */
-public class doublebuf//
-        extends GLSkeleton<GLJPanel>
-        implements GLEventListener, KeyListener, MouseListener {
+public class doublebuf extends GLSkeleton<GLJPanel> implements GLEventListener, KeyListener, MouseListener {
     private float spin = 0f, spinDelta = 0f; 
 
+    @SuppressWarnings("Duplicates")
     @Override
     protected GLJPanel createDrawable() {
         GLCapabilities caps = new GLCapabilities(null);
@@ -59,7 +60,6 @@ public class doublebuf//
 
     public synchronized void display(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
-        //
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glPushMatrix();
         gl.glRotatef(spin, 0.0f, 0.0f, 1.0f);

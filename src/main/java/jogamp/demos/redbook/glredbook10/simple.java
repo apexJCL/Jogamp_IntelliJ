@@ -3,10 +3,14 @@ package jogamp.demos.redbook.glredbook10;
  * This program draws a white rectangle on a black background.
  * @author Kiet Le (Java port) Ported to JOGL 2.x by Claudio Eduardo Goes
  */
-import com.jogamp.opengl.*;
-import com.jogamp.opengl.awt.GLJPanel;
-import javax.swing.*;
 
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.awt.GLJPanel;
+
+import javax.swing.*;
 
 public class simple
 {
@@ -15,7 +19,6 @@ public class simple
     /*
      * remove/commet out to be able to resize window smaller
      */
-    JFrame.setDefaultLookAndFeelDecorated(true);
     // name of class as title
     JFrame jframe = new JFrame("simple");
     jframe.setSize(500, 500);
@@ -51,15 +54,11 @@ public class simple
         gl.glFlush();
       }
 
-      public void reshape(GLAutoDrawable drawable, int x, int y, int width,
-          int height)
-      {
+      public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height){
         // TODO Auto-generated method stub
       }
 
-      public void displayChanged(GLAutoDrawable drawable, boolean modeChanged,
-          boolean deviceChanged)
-      {
+      public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged){
         // TODO Auto-generated method stub
       }
 
@@ -69,7 +68,6 @@ public class simple
     });
 
     jframe.getContentPane().add(canvas);// put the canvas into a JFrame window
-    //jframe.add(jcanvas);
     jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     jframe.setVisible(true); // show window
   }
