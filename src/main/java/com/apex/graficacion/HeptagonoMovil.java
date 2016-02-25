@@ -48,12 +48,13 @@ import java.awt.event.MouseListener;
 
 public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListener, KeyListener, MouseListener {
 
+    private GL2 gl;
     private float spin = 0;
     private float spinDelta = 0;
 
     public static void main(String[] args){
         HeptagonoMovil hepta = new HeptagonoMovil();
-        FPSAnimator animator = new FPSAnimator(hepta.drawable,60);
+        FPSAnimator animator = new FPSAnimator(hepta.drawable, 144);
         hepta.setAnimator(animator);
         JFrame frame = new JFrame("Heptágono Movil");
         frame.setSize(500, 500);
@@ -79,19 +80,19 @@ public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListe
 
     @Override
     public void init(GLAutoDrawable drawable) {
-        GL2 gl = drawable.getGL().getGL2();
+        gl = drawable.getGL().getGL2();
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glShadeModel(GL2.GL_FLAT);
     }
 
     @Override
     public void dispose(GLAutoDrawable drawable) {
-        //animator.stop();
+        animator.stop();
+        gl = null;
     }
 
     @Override
     public synchronized void display(GLAutoDrawable drawable) {
-        GL2 gl = drawable.getGL().getGL2();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glPushMatrix();
         gl.glRotatef(spin, 0.0f, 0.0f, 1.0f);
