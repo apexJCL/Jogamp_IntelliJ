@@ -102,8 +102,8 @@ public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListe
     }
 
     private void drawHeptagon(GL2 gl){
+        gl.glColor3f(0f, 1.0f, 1.0f);
         gl.glBegin(GL2.GL_POLYGON);
-        gl.glColor3f(1.0f, 1.0f, 1.0f);
         for(int i = 0; i < 7; i++)
             gl.glVertex2d(Math.sin(i/7d*2d*Math.PI)*30, Math.cos(i/7d*2d*Math.PI)*30);
         gl.glEnd();

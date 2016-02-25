@@ -62,6 +62,7 @@ public class Heptagono {
         }
 
         private void drawHeptagon(){
+            gl.glColor3f(0, 1, 1);
             gl.glBegin(GL2.GL_POLYGON);
             for(int i = 0; i < 7; i++)
                 gl.glVertex2d(Math.sin(i/7d*2d*Math.PI)*30, Math.cos(i/7d*2d*Math.PI)*30);
