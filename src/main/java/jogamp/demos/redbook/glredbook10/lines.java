@@ -17,6 +17,7 @@ public class lines//
         implements GLEventListener, KeyListener {
     private GLU glu; 
 
+    @SuppressWarnings("Duplicates")
   @Override
     protected GLJPanel createDrawable() {
         GLCapabilities caps = new GLCapabilities(null);
@@ -106,6 +107,7 @@ public class lines//
         gl.glFlush();
     }
 
+    @SuppressWarnings("Duplicates")
     public void reshape(GLAutoDrawable drawable, int x, int y, int w, int h) {
         GL2 gl = drawable.getGL().getGL2();
         //

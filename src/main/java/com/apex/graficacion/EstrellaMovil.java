@@ -10,60 +10,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.nio.DoubleBuffer;
 
-/**
- * Clase que despliega un JFrame con un GLJPanel.
- *
- * Muestra una proyección de un heptágono.
- *
- * Para rotar:
- *
- * Teclado:
- *     Flecha Izq/Derecha: Rotación izq/der
- *     Cualquier otra tecla: Detiene rotación
- *
- * Mouse:
- *     Clic izq: Rotación izq.
- *     Clic der: Detiene rotación.
- *
- *
- *  -----------------------------------------------
- *
- *  A class that shows a JFrame with a GJPanel.
- *
- *  Shows a prrojection of an heptagon.
- *
- *  Rotation controls:
- *
- *      Keyboard:
- *          Left/Right keys: L/R Rotation.
- *          Any other key: Stop roration.
- *
- *      Mouse:
- *          Left Click: Rotate Left
- *          Right Click: Stops rotation
- *
- *  Autor: José Carlos López
- */
-
-public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListener, KeyListener, MouseListener {
+public class EstrellaMovil extends GLSkeleton<GLJPanel> implements GLEventListener, KeyListener, MouseListener  {
 
     private GL2 gl;
     private float spin = 0;
     private float spinDelta = 0;
+    private double[] vertex = {0, 0, 0, 1, 0.245d, 0.5d};
+    private double[] vertex2 = {0, 0, 0, 1, -0.24995d, 0.5d};
+    private double multiplier = 20;
+    private double angle = 51.42d;
 
-    public static void main(String[] args){
-        HeptagonoMovil hepta = new HeptagonoMovil();
-        FPSAnimator animator = new FPSAnimator(hepta.drawable, 144);
-        hepta.setAnimator(animator);
-        JFrame frame = new JFrame("Heptágono Movil");
+    public static void main (String[] args){
+        EstrellaMovil estrellaMovil = new EstrellaMovil();
+        FPSAnimator animator = new FPSAnimator(estrellaMovil.drawable, 144);
+        estrellaMovil.setAnimator(animator);
+        JFrame frame = new JFrame("Estrella Móvil");
         frame.setSize(500, 500);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.getContentPane().add(hepta.drawable);
+        frame.getContentPane().add(estrellaMovil.drawable);
         frame.setVisible(true);
-        hepta.drawable.requestFocusInWindow();
+        estrellaMovil.drawable.requestFocusInWindow();
         animator.start();
     }
 
@@ -92,22 +60,37 @@ public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListe
         gl = null;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public synchronized void display(GLAutoDrawable drawable) {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glPushMatrix();
         gl.glRotatef(spin, 0.0f, 0.0f, 1.0f);
-        drawHeptagon();
+        drawStar();
         gl.glPopMatrix();
         gl.glFlush();
         spinIt();
     }
 
-    private void drawHeptagon(){
-        gl.glColor3f(0f, 1.0f, 1.0f);
+
+    private void drawStar(){
+        gl.glColor3f(0f, 0f, 1.0f);
         gl.glBegin(GL2.GL_POLYGON);
-        for(int i = 0; i < 7; i++)
-            gl.glVertex2d(Math.sin(i/7d*2d*Math.PI)*30, Math.cos(i/7d*2d*Math.PI)*30);
+        for(int rotate = 0; rotate < 7; rotate++) {
+            for (int i = 0; i < vertex.length; i += 2) {
+                gl.glVertex2d(((vertex[i] * Math.cos((rotate*angle*Math.PI)/180d)) - (vertex[i+1]* Math.sin((rotate*angle*Math.PI)/180d))) * multiplier ,
+                              ((vertex[i + 1] * Math.cos((rotate*angle*Math.PI)/180d)) + (vertex[i] * Math.sin((rotate*angle*Math.PI)/180d))) * multiplier);
+            }
+        }
+        gl.glEnd();
+        gl.glColor3f(0f, 1f, 0f);
+        gl.glBegin(GL2.GL_POLYGON);
+        for(int rotate = 0; rotate < 7; rotate++) {
+            for (int i = 0; i < vertex2.length; i += 2) {
+                gl.glVertex2d(((vertex2[i] * Math.cos((rotate*angle*Math.PI)/180d)) - (vertex2[i+1]* Math.sin((rotate*angle*Math.PI)/180d))) * multiplier ,
+                        ((vertex2[i + 1] * Math.cos((rotate*angle*Math.PI)/180d)) + (vertex2[i] * Math.sin((rotate*angle*Math.PI)/180d))) * multiplier);
+            }
+        }
         gl.glEnd();
     }
 
@@ -137,6 +120,7 @@ public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListe
     @Override
     public void keyTyped(KeyEvent e) {}
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){
@@ -155,6 +139,7 @@ public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListe
     @Override
     public void keyReleased(KeyEvent e) {}
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void mouseClicked(MouseEvent e) {
         switch (e.getButton()) {
@@ -180,4 +165,5 @@ public class HeptagonoMovil extends GLSkeleton<GLJPanel> implements GLEventListe
 
     @Override
     public void mouseExited(MouseEvent e) {}
+
 }
